@@ -1,0 +1,26 @@
+# sudo nano /etc/systemd/system/dynamic-response.service
+
+[Unit]
+Description=Dynamic Response Engine for Cognitive Honeypots
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+User=student
+WorkingDirectory=/home/student/dcd-unified/scripts
+ExecStart=/usr/bin/python3 /home/student/dcd-unified/scripts/dynamic_response.py
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+
+# THEN:
+#sudo systemctl daemon-reexec
+#sudo systemctl daemon-reload
+#sudo systemctl enable dynamic-response.service
+#sudo systemctl start dynamic-response.service
+#sudo systemctl status dynamic-response.service

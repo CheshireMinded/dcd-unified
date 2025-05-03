@@ -1,0 +1,120 @@
+version: "3.8"
+
+services:
+  cowrie:
+    image: cowrie/cowrie:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+    ports:
+      - "2222:2222"
+    volumes:
+      - /home/student/dcd-unified/data/cowrie:/cowrie/data
+    networks:
+      - honeynet
+
+  dionaea:
+    image: ghcr.io/telekom-security/dionaea:24.04.1
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node1
+    ports:
+      - target: 21
+        published: 21
+        protocol: tcp
+        mode: host
+      - target: 42
+        published: 42
+        protocol: tcp
+        mode: host
+      - target: 69
+        published: 69
+        protocol: udp
+        mode: host
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+      - target: 445
+        published: 445
+        protocol: tcp
+        mode: host
+      - target: 135
+        published: 135
+        protocol: tcp
+        mode: host
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    volumes:
+      - /home/student/dcd-unified/data/dionaea:/data
+      - /home/student/dcd-unified/data/dionaea/logs:/data/dionaea/log
+    networks:
+      - honeynet
+
+  honeypot_elasticpot_triggered:
+    image: ghcr.io/telekom-security/elasticpot:24.04.1
+    deploy:
+      mode: replicated
+      replicas: 0
+      placement:
+        constraints:
+          - node.hostname == node2
+    ports:
+      - "9201:9200"
+    networks:
+      - honeynet
+    logging:
+      driver: "json-file"
+    restart: always
+
+  honeypot_heralding_triggered:
+    image: ghcr.io/telekom-security/heralding:24.04.1
+    deploy:
+      mode: replicated
+      replicas: 0
+      placement:
+        constraints:
+          - node.hostname == node1
+    ports:
+      - "2223:22"
+    networks:
+      - honeynet
+    logging:
+      driver: "json-file"
+    restart: always
+
+  honeypot_tanner_triggered:
+    image: ghcr.io/telekom-security/tanner:24.04.1
+    deploy:
+      mode: replicated
+      replicas: 0
+      placement:
+        constraints:
+          - node.role == worker
+    networks:
+      - honeynet
+    logging:
+      driver: "json-file"
+    restart: always
+
+volumes:
+  cowrie_data:
+  cowrie_logs:
+  dionaea_data:
+  dionaea_logs:
+
+networks:
+  honeynet:
+    external: true

@@ -1,0 +1,12 @@
+# /home/student/dcd-unified/state/attacker_state.json
+{
+  "192.168.1.105": {
+    "session_count": 3,
+    "bias_history": ["anchoring", "confirmation"],
+    "response_history": ["decoy_file", "delayed_response"],
+    "personality": "aggressive",
+    "last_seen": "2025-05-03T11:12:00",
+    "frustration_level": 0.6,
+    "confidence_drift": 0.4
+  }
+}

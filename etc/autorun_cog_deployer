@@ -1,0 +1,25 @@
+# IN: sudo nano /etc/systemd/system/cognitive-deployer.service
+
+[Unit]
+Description=DCD Cognitive Deployer
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=student
+WorkingDirectory=/home/student/dcd-unified/controller
+ExecStart=/usr/bin/python3 /home/student/dcd-unified/controller/cognitive_deployer.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+
+
+# THEN
+#sudo systemctl daemon-reexec
+#sudo systemctl daemon-reload
+#sudo systemctl enable cognitive-deployer.service
+#sudo systemctl start cognitive-deployer.service

@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.17.18
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == worker
+    user: root
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+    networks:
+      - honeynet
+    command: ["--strict.perms=false"]
+    depends_on:
+      - logstash
+    environment:
+      - ELASTICSEARCH_HOST=elk_elasticsearch
+      - LOGSTASH_HOST=elk_logstash
+
+networks:
+  honeynet:
+    external: true
