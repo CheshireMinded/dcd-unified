@@ -1,0 +1,23 @@
+# TO RUN: docker stack deploy -c elasticpot-stack.yml elasticpot
+version: "3.8"
+
+services:
+  honeypot_elasticpot_triggered:
+    image: ghcr.io/telekom-security/elasticpot:24.04.1
+    deploy:
+      mode: replicated
+      replicas: 0
+      placement:
+        constraints:
+          - node.hostname == worker
+    ports:
+      - "9201:9200"
+    networks:
+      - honeynet
+    logging:
+      driver: "json-file"
+    restart: always
+
+networks:
+  honeynet:
+    external: true
