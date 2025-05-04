@@ -1,0 +1,53 @@
+# TO RUN: docker stack deploy -c dionaea-stack.yml dionaea
+version: "3.8"
+
+services:
+  dionaea:
+    image: ghcr.io/telekom-security/dionaea:24.04.1
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node2
+    ports:
+      - target: 21
+        published: 21
+        protocol: tcp
+        mode: host
+      - target: 42
+        published: 42
+        protocol: tcp
+        mode: host
+      - target: 69
+        published: 69
+        protocol: udp
+        mode: host
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+      - target: 445
+        published: 445
+        protocol: tcp
+        mode: host
+      - target: 135
+        published: 135
+        protocol: tcp
+        mode: host
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    volumes:
+      - /home/student/dcd-unified/data/dionaea:/opt/dionaea/var/dionaea
+    networks:
+      - honeynet
+
+networks:
+  honeynet:
+    external: true
