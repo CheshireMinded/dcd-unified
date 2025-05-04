@@ -1,0 +1,22 @@
+# TO RUN: docker stack deploy -c cowrie-stack.yml cowrie
+version: "3.8"
+
+services:
+  cowrie:
+    image: cowrie/cowrie:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+    ports:
+      - "2222:2222"
+    volumes:
+      - /home/student/dcd-unified/data/cowrie:/cowrie/data
+    networks:
+      - honeynet
+
+networks:
+  honeynet:
+    external: true
