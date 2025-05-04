@@ -1,0 +1,23 @@
+# TO RUN: docker stack deploy -c heralding-stack.yml heralding
+version: "3.8"
+
+services:
+  honeypot_heralding_triggered:
+    image: ghcr.io/telekom-security/heralding:24.04.1
+    deploy:
+      mode: replicated
+      replicas: 0
+      placement:
+        constraints:
+          - node.hostname == node1
+    ports:
+      - "2223:22"
+    networks:
+      - honeynet
+    logging:
+      driver: "json-file"
+    restart: always
+
+networks:
+  honeynet:
+    external: true
