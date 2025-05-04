@@ -9,7 +9,6 @@ import hashlib
 from datetime import datetime
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass
-
 import docker
 import requests
 from prometheus_client import Counter, Histogram, Gauge, Summary
@@ -21,7 +20,9 @@ ELK_QUEUE_FILE = "/home/student/dcd-unified/state/elk_retry_queue.jsonl"
 HONEYPOTS = [
     {"name": "cowrie", "service": "cowrie", "bias": "anchoring"},
     {"name": "dionaea", "service": "dionaea", "bias": "confirmation"},
-    {"name": "elasticpot", "service": "elasticpot", "bias": "overconfidence"}
+    {"name": "elasticpot", "service": "elasticpot", "bias": "overconfidence"},
+    {"name": "heralding", "service": "heralding", "bias": "overconfidence"},
+    {"name": "tanner", "service": "tanner", "bias": "anchoring"}
 ]
 
 # Logging setup
