@@ -1,3 +1,5 @@
+# global is good node role = to manager may be an issue
+
 version: "3.8"
 
 services:
