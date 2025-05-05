@@ -78,7 +78,7 @@ class DynamicResponseManager:
         os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
         with open(STATE_FILE, "w") as f:
             json.dump(self.attacker_state, f, indent=2)
-
+# Probably should take this out 
     def _generate_attacker_codename(self, ip: str, bias: str) -> str:
         h = int(hashlib.sha256(ip.encode()).hexdigest(), 16) % 10000
         family = {
