@@ -115,6 +115,9 @@ class DynamicResponseManager:
         self.attacker_state[attacker_ip] = profile
         self._save_attacker_state()
 
+
+    # is there a bug here??????????????
+    
     def trigger_honeypot(self, bias: str, attacker_ip: str) -> None:
         honeypots = [h for h in HONEYPOTS if h["bias"] == bias]
         if not honeypots:
@@ -140,6 +143,7 @@ class DynamicResponseManager:
         response_type = response["type"]
         logger.info(f"Applying response: {response_type} for bias {bias}")
 
+        # add else if
         try:
             if response_type == "decoy_file":
                 path = f"/home/student/dcd-unified/data/cowrie/bait/{response['filename']}"
