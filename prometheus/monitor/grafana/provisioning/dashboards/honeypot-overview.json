@@ -1,0 +1,62 @@
+{
+  "id": null,
+  "uid": "honeypot-overview",
+  "title": "Honeypot Metrics Overview",
+  "timezone": "browser",
+  "schemaVersion": 36,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Active Responses",
+      "targets": [
+        {
+          "expr": "active_responses",
+          "format": "time_series"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Executed Responses",
+      "targets": [
+        {
+          "expr": "responses_executed",
+          "format": "time_series"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": {
+        "x": 6,
+        "y": 0,
+        "w": 6,
+        "h": 5
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Queue Length",
+      "targets": [
+        {
+          "expr": "elk_retry_queue_length",
+          "format": "time_series"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": {
+        "x": 0,
+        "y": 5,
+        "w": 12,
+        "h": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Run node_exporter on all nodes (:9100)
+
+Run cAdvisor on main, node1, node2 (:8080)
+
+Run elasticsearch_exporter on main (:9114)

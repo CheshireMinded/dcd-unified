@@ -1,0 +1,76 @@
+# docker-compose.monitor.yml - swarm compatible
+
+version: "3.8"
+
+services:
+
+  prometheus:
+    image: prom/prometheus:latest
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus_data:/prometheus
+    networks:
+      - honeynet
+    deploy:
+      placement:
+        constraints: [node.labels.role == monitor]
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - honeynet
+    deploy:
+      placement:
+        constraints: [node.labels.role == monitor]
+
+  node_exporter:
+    image: prom/node-exporter:latest
+    pid: "host"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs"
+    networks:
+      - honeynet
+    deploy:
+      mode: global
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - honeynet
+    deploy:
+      placement:
+        constraints: [node.labels.role == monitor]
+
+configs:
+  prometheus_config:
+    file: ./prometheus/prometheus.yml
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  honeynet:
+    external: true
+
