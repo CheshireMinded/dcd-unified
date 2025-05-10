@@ -1,5 +1,3 @@
-# docker-compose.monitor.yml - swarm compatible
-
 version: "3.8"
 
 services:
