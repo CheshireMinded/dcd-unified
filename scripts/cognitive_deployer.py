@@ -14,9 +14,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("cognitive_deployer")
 
 # Paths to honeypot logs
-COWRIE_LOG = "/home/student/dcd-unified/data/cowrie/logs/cowrie.json"
-DIONAEA_LOG = "/home/student/dcd-unified/data/dionaea/logs/dionaea.json"
-ELASTICPOT_LOG = "/home/student/dcd-unified/data/elasticpot/logs/elasticpot.json"
+COWRIE_LOG = "/home/student/dcd-unified/data/cowrie/log/cowrie.json"
+DIONAEA_LOG = "/home/student/dcd-unified/data/dionaea/log/dionaea.json"
+ELASTICPOT_LOG = "/home/student/dcd-unified/data/elasticpot/log/elasticpot.json"
 
 # Cache to avoid repeated triggers
 seen_events = set()
