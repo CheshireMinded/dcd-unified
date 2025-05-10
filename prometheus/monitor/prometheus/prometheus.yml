@@ -19,16 +19,23 @@ scrape_configs:
   - job_name: 'elasticsearch'
     static_configs:
       - targets:
-          - 'main:9114' 
+          - 'main:9114'
 
   - job_name: 'prometheus'
     static_configs:
       - targets:
           - 'prometheus:9090'
 
-  - job_name: 'dynamic-response'
+  - job_name: 'cognitive-deployer'
     static_configs:
       - targets:
           - 'main:8000'
           - 'node1:8000'
           - 'node2:8000'
+
+  - job_name: 'dynamic-response'
+    static_configs:
+      - targets:
+          - 'main:8001'
+          - 'node1:8001'
+          - 'node2:8001'
