@@ -17,7 +17,7 @@ from prometheus_client import Counter, Histogram, Gauge, start_http_server
 # === Configuration Constants ===
 
 STATE_FILE        = "/home/student/dcd-unified/state/attacker_state.json"
-ELK_QUEUE_FILE    = "/home/student/dcd-unified/state/elk_retry_queue.jsonl"
+ELK_QUEUE_FILE    = "/home/student/dcd-unified/state/elk_retry_queue.json"
 FETCH_WINDOW_SEC  = 60     # look-back window for new events
 COOLDOWN_SEC      = 300    # how long to wait before scaling down
 
